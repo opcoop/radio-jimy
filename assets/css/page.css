@@ -1,0 +1,101 @@
+body {
+	background: #272e38;
+}
+
+#map {
+	height: 500px;
+	position: absolute;
+	left:0;right:0;
+}
+
+.coverall {
+	position: absolute;
+	left: 0; right: 0; top: 0; bottom: 0;
+	z-index: 998;
+	background: #272e38;
+}
+
+.loading {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top:0;left:0;right:0;bottom:0;
+	margin: auto;
+	z-index: 999;
+}
+
+.loading #loading-text {
+	font-family: Code Pro;
+	font-size: 25px;
+	text-align: left;
+	color: #fff;
+}
+
+.loading .bar {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	border-radius: 50%;
+	background: url('data:image/gif;base64,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') 0 0 repeat-y;
+	background-size: 100% 100%;
+	-webkit-animation: rotate 2s infinite linear;
+	-moz-animation: rotate 2s infinite linear;
+	-o-animation: rotate 2s infinite linear;
+	-ms-animation: rotate 2s infinite linear;
+	animation: rotate 2s infinite linear;
+}
+
+.loading .bar::after {
+	content: '';
+	display: block;
+	width: 86%;
+	height: 86%;
+	margin: 7%;
+	background: #272e38;
+	border-radius: 50%;
+}
+
+@-webkit-keyframes rotate {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@-moz-keyframes rotate {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+	}
+}
+
+@-ms-keyframes rotate {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(360deg);
+	}
+}
+
+@-o-keyframes rotate {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(360deg);
+	}
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

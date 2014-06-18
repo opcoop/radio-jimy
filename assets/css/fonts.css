@@ -1,0 +1,21 @@
+@font-face {
+	font-family: "Code Pro";
+	font-weight: normal;
+	font-style: normal;
+	src: url("../fonts/CodePro.eot");
+	src: url("../fonts/CodePro.svg") format("svg"),
+		 url("../fonts/CodePro.woff") format("woff"),
+		 url("../fonts/CodePro.ttf") format("truetype"),
+		 url("../fonts/CodePro.eot") format('embedded-opentype');
+}
+
+@font-face {
+	font-family: "Code Pro Light";
+	font-weight: normal;
+	font-style: normal;
+	src: url("../fonts/CodeProLight.eot");
+	src: url("../fonts/CodeProLight.svg") format("svg"),
+		 url("../fonts/CodeProLight.woff") format("woff"),
+		 url("../fonts/CodeProLight.ttf") format("truetype"),
+		 url("../fonts/CodeProLight.eot") format('embedded-opentype');
+}

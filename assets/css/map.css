@@ -1,0 +1,37 @@
+.country, .state {
+	cursor: pointer;
+}
+
+.country {
+	fill: #353e4d;
+}
+
+/* Hide US State Layer (they are only used for hovers) */
+.state {
+	fill: transparent;
+}
+
+.state:hover, .country:hover {
+	fill: rgba(255, 255, 255, 0.3);
+}
+
+/* Fixes "Gaps" in US State Layer */
+.country.US:hover {
+	fill: #353e4d;
+}
+
+.marker {
+	fill: transparent;
+	stroke: #eb85e8;
+}
+
+.marker:hover {
+	fill: #eb85e8;
+}
+
+.arc {
+	fill: none;
+	stroke: white;
+	stroke-width: 1px;
+	stroke-dasharray: 0,2 1;
+}
