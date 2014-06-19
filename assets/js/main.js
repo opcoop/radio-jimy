@@ -3,17 +3,17 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 	var loadQueue = new preload.LoadQueue(true);
 	loadQueue.on('fileprogress', loadProgressUpdate);
 	loadQueue.on('complete', loadComplete);
-	loadQueue.loadFile({name: 'Topology', id: 'topo', src: 'assets/data/topo.json'});
-        loadQueue.loadFile({name: 'Countries (lowres)', id: 'countrieslowres', src: 'assets/data/world-countries.json'});
-        loadQueue.loadFile({name: 'Provincias)', id: 'provincias', src: 'assets/data/argentina-provincias.json'});
+	loadQueue.loadFile({name: 'Mapa Mundi', id: 'topo', src: 'assets/data/topo.json'});
+        loadQueue.loadFile({name: 'Mapa Mundi (baja resolución)', id: 'countrieslowres', src: 'assets/data/world-countries.json'});
+        loadQueue.loadFile({name: 'Provincias', id: 'provincias', src: 'assets/data/argentina-provincias.json'});
 
-	loadQueue.loadFile({name: 'ISO3166 Codes', id: 'iso3166', src: 'assets/data/iso3166.csv'});
-	loadQueue.loadFile({name: 'Continents', id: 'continents', src: 'assets/data/country_continent.csv'});
-	loadQueue.loadFile({name: 'Countries', id: 'countries', src: 'assets/data/country_latlon.csv'});
+	loadQueue.loadFile({name: 'Códigos ISO3166', id: 'iso3166', src: 'assets/data/iso3166.csv'});
+	loadQueue.loadFile({name: 'Continentes', id: 'continents', src: 'assets/data/country_continent.csv'});
+	loadQueue.loadFile({name: 'Países', id: 'countries', src: 'assets/data/country_latlon.csv'});
 
-	loadQueue.loadFile({name: 'Regions', id: 'regions', src: 'assets/data/region_codes.csv'});
+	loadQueue.loadFile({name: 'Regiones', id: 'regions', src: 'assets/data/region_codes.csv'});
 	loadQueue.loadFile({name: 'States', id: 'states', src: 'assets/data/state_latlon.csv'});
-	loadQueue.loadFile({name: 'Servers', id: 'servers', src: 'assets/data/servers.json'});
+	loadQueue.loadFile({name: 'Radios', id: 'servers', src: 'assets/data/servers.json'});
 	//loadQueue.loadFile({name: 'Tiles', id: 'tiles', src: 'tiles/geoserver.mbtiles'});
 
 	// D3 Elems
@@ -225,7 +225,7 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
                 var join = serversLayer.selectAll('.marker')
 			    .data(up, function (d) { return d.id;;});
 
-                join.style({"stroke": "white", "fill": "#aaa"})
+                join.style({"stroke": "white"})
                         .transition().delay(function (d) {return Math.random()*1000;}).duration(550)
                         .style("stroke-width", function (d) {
                                 if (d.live)
