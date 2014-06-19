@@ -121,7 +121,8 @@ define(function(require, exports, module) {
 
 	module.exports = {
 		Geo: Geo,
-                Radio: Radio
+                Radio: Radio,
+                pick_one: pick_one
 	};
 
 });

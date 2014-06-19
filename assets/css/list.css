@@ -15,7 +15,7 @@ ul{
   padding: 0;
 }
 
-li {
+li.radio {
     width: 250px;
     padding: 5px;
     height: 80px;
@@ -49,7 +49,7 @@ li {
 }
 
 
-label{
+label.desc-label{
   background: #34495E;
   height: 69px;
   width: 100%;
@@ -70,7 +70,7 @@ label{
 }
 
 
-label h2 span{
+label.desc-label h2 span{
   display: block;
   font-size: 12px;
   text-transform: capitalize;
@@ -78,7 +78,7 @@ label h2 span{
   color: #bdc3c7;
 }
 
-label:before{
+label.desc-label :before{
   content:"";
   width: 19px;
   height: 19px;
@@ -92,7 +92,7 @@ label:before{
   z-index: 9999;
 }
 
-label:after{
+label.desc-label :after{
   content: "";
   width: 60px;
   height: 68px;
@@ -103,7 +103,7 @@ label:after{
 }
 
 
-label.live:before{
+label.live :before{
   background: url("http://designmodo.github.io/Flat-UI/images/todo/done.png") no-repeat center center;
   border: 1px solid #1abc9d;
 }

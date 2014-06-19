@@ -176,44 +176,91 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 
         }
 
+        function highlightRadio (d) {
+                $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+                          {
+                                  tags: d.properties.name + ',argentina',
+                                  tagmode: "all",
+                                  format: "json"
+                          }, function (data) {
+
+                                  var p = Util.pick_one(data.items);
+                                  d3.select('.radio-cover')
+                                          .attr('src', p.media.m);
+                });
+
+                d3.select('#desc' + d.id)
+                        .classed({orange: true});
+
+                d3.select('#marker' + d.id)
+                        .transition().duration(400)
+                        .style('fill', 'red')
+                        .attr('r', 20);
+
+                d3.select('#player-radio')
+                        .transition().duration(400)
+                        .text(function () {return d.properties.name;});
+
+                d3.select('#player-desc')
+                        .transition().duration(400)
+                        .text(function () {return d.properties.desc;});
+        }
+
+        function unlightRadio (d) {
+                d3.select('#desc' + d.id)
+                        .classed({orange: false});
+
+                d3.select('#marker' + d.id)
+                        .transition().duration(400)
+                        .style('fill', 'white')
+                        .attr('r', 4.5);
+        }
+
+        function drawPlaylist(serversLayer, added) {
+                var rup = d3.select('.playlist');
+                var p = rup.selectAll('li')
+                            .data(added, function(d) { return d.id;});
+
+                var l = p.enter()
+                            .append("li")
+                            .attr({class: 'pentry', id: function (d) { return 'desc' + d.id;}})
+                            .on('mouseenter', function (d) {
+                                    highlightRadio(d);
+                            })
+                            .on('mouseleave', function (d) {
+                                    unlightRadio(d);
+                            });
+
+                l.append('a').attr('href', '#');
+                l.append('i');
+                l.text(function (d) {return d.properties.name});
+        }
+
         function drawDesc(serversLayer, added) {
                 var rup = d3.select('#up');
                 var p = rup.selectAll('li')
                             .data(added, function(d) { return d.id;});
 
-                p.select('label').attr('class', function (d) { return (d.live)?"live":"off";});
+                p.select('.desc-label').classed('live', function (d) { return (d.live);});
 
                 var l = p.enter()
                             .append("li")
+                            .attr({class: 'radio', id: function (d) { return 'desc' + d.id;}})
                             .on('mouseenter', function (d) {
-                                    d3.select(this)
-                                            .classed({orange: true});
-
-                                    d3.select('#marker' + d.id)
-                                            .transition().duration(400)
-                                            .style('fill', 'red')
-                                            .attr('r', 20);
-
-                                    console.log (d, this);
+                                    highlightRadio(d);
                             })
                             .on('mouseleave', function (d) {
-                                    d3.select(this)
-                                            .classed({orange: false});
-
-                                    d3.select('#marker' + d.id)
-                                            .transition().duration(400)
-                                            .style('fill', 'white')
-                                            .attr('r', 4.5);
-
+                                    unlightRadio(d);
                             });
 
                 l.append("label")
-                        .attr('class', function (d) { return (d.live)?"live":"off";})
+                        .attr('class', 'desc-label')
+                        .classed('live', function (d) { return (d.live);})
                         .append("h2")
                         .attr('for', function (d) { return 'label-' + d.properties.id; })
                         .text(function (d) { return d.properties.name;})
                         .append("span")
-                        .text(function (d) {return Util.Radio.mapu_talk(2, 4);});
+                        .text(function (d) {return d.properties.desc;});
                 /*
                  l.append("p")
                  .text(function (d) {return mapu_talk (15, 30);});
@@ -252,14 +299,12 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 
 		//.on('click', updateServers);
 
-                circles.on('mouseover', function () {
-                        d3.select(this).transition().duration(400)
-                                .attr('r', 10);
+                circles.on('mouseover', function (d) {
+                        highlightRadio(d);
                 });
 
-                circles.on('mouseout', function () {
-                        d3.select(this).transition().duration(200)
-                                .attr('r', 4.5);
+                circles.on('mouseout', function (d) {
+                        unlightRadio(d);
                 });
 
 
@@ -280,14 +325,19 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 	function drawServers() {
                 var data = loadQueue.getResult('servers');
 		var servers = topojson.feature(data, data.objects.places).features;
-                servers = servers.map (function (d,k) {d.id = k;return d;;});
+                servers = servers.map (function (d,k) {
+                        d.id = k;
+                        d.properties.desc = Util.Radio.mapu_talk(2, 4);
+                        return d;
+                });
 
 		var serversLayer = dMap.append('g')
 			    .attr('id', 'layer3');
 
                 Util.Radio.life (servers, function (up) {
-                        drawCircles(serversLayer, up);
-                        drawDesc   (serversLayer, up);
+                        drawPlaylist(serversLayer, up);
+                        drawCircles (serversLayer, up);
+                        drawDesc    (serversLayer, up);
 		        mapLayers.push(serversLayer);
                 });
 	}

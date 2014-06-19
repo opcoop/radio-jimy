@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/map.css">
         <link rel="stylesheet" type="text/css" href="assets/css/list.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/player.css">
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/sugar/1.3.9/sugar.min.js"/></script>
         <script type="text/javascript" src="assets/js/indexeddb.shim.min.js"/></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js" data-main="assets/js/app"/></script>
@@ -21,5 +22,67 @@
         <div class="steps">
           <ul id="up" class="list"></ul>
         </div>
+<div id="player-container">
+	<label class="to-back-label" for="to-back"><i class="fa fa-bars fa-lg"></i></label>
+	<input type="checkbox" id="to-back"><!-- playlist toggle -->
+	<canvas id="progress" width="320" height="320"></canvas><!-- progress bar -->
+	<div id="player">
+		<audio id="audio" controls>
+			<source src="http://storage-new.newjamendo.com/download/track/705190/mp32/Abi_-_Abitude.mp3" type="audio/mpeg" codecs="mp3"></source>
+		</audio>
+		<img class="radio-cover" src="http://upload.wikimedia.org/wikipedia/commons/b/bc/Salta's_La_Ruta_del_Vino.jpg"><!-- album cover -->
+		<label class="to-lyrics-label" for="to-lyrics"><i class="fa fa-caret-down fa-lg"></i></label>
+		<input type="checkbox" id="to-lyrics"><!-- lyrics toggle -->
+		<div class="cover">
+			<div class="controls">
+				<button id="backward" title="Tweet"><i class="fa fa-twitter-square fa-lg"></i></button>
+				<button id="play-pause" title="Play" onclick="togglePlayPause()"><i class="fa fa-play fa-10x"></i></button>
+				<button id="backward" title="Backward"><i class="fa fa-random fa-lg"></i></button>
+				<input id="volume" name="volume" min="0" max="1" step="0.1" type="range" onchange="setVolume()" />
+			</div><!-- #controls -->
+			<div class="info">
+				<p id="player-radio"><a href="#" target="_blank"></a></p>
+				<p id="player-desc"><a href="#" target="_blank"></a></p>
+			</div><!-- #info -->
+			<div class="lyrics">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				<p>Donec vulputate nec leo vel tincidunt.</p>
+				<p>Pellentesque urna massa, volutpat eu viverra in, dignissim in diam.</p>
+				<p>Nullam laoreet aliquet pellentesque.</p>
+				<p>Duis varius augue eu sem fringilla dignissim.</p>
+				<p>Cras ligula erat, suscipit ac arcu vel, consectetur mollis nulla.</p>
+				<p>Pellentesque aliquam tortor in mollis pharetra.</p>
+				<p>Vestibulum consequat lacinia blandit.</p>
+				<p>Sed sodales semper nibh pulvinar viverra.</p>
+				<p>Pellentesque id magna ipsum. In hac habitasse platea dictumst.</p>
+				<p>Aliquam lorem lectus, consequat eget fermentum eget, posuere vel dolor.</p>
+				<p>Sed vel tellus gravida, bibendum lacus at, convallis est.</p>
+				<p>Duis cursus purus a ligula gravida pulvinar.</p>
+				<p>Vivamus vitae sem aliquet, interdum orci id, viverra dui.</p>
+				<p>Etiam at laoreet justo, eget congue neque.</p>
+				<p>Morbi tempor semper sem malesuada iaculis.</p>
+				<p>Aenean condimentum massa sit amet venenatis ultricies.</p>
+				<p>Fusce urna justo, interdum at purus sit amet, sagittis tristique orci.</p>
+				<p>Nunc nibh tellus, pretium at diam sit amet, vestibulum tincidunt mauris.</p>
+				<p>Curabitur in augue et nisi adipiscing ultrices.</p>
+				<p>Proin cursus in quam in ullamcorper.</p>
+				<p>Mauris laoreet sodales magna a mollis.</p>
+				<p>Maecenas elementum porttitor dolor nec auctor.</p>
+				<p>Praesent dignissim elit et turpis facilisis, ut sagittis metus congue.</p>
+				<p>Curabitur quis augue pulvinar, condimentum ante et, sollicitudin justo.</p>
+				<p>Ut interdum ut erat nec egestas.</p>
+				<p>Ut a lectus a justo euismod sodales.</p>
+			</div><!-- #lyrics -->
+			<p class="scroll">scroll down</p>
+		</div><!-- #cover -->
+	</div><!-- #player -->
+	<div id="flip-back">
+		<ul class="playlist">
+		  <h3>Otras radios</h3>
+		</ul>
+	</div><!-- #flip-back -->
+</div><!-- #container -->
+
+
 </body>
 </html>
