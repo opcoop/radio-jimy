@@ -15,6 +15,10 @@
 	fill: rgba(255, 255, 255, 0.3);
 }
 
+.country.ARG, .country.FLK {
+	fill: #e83 ;
+}
+
 /* Fixes "Gaps" in US State Layer */
 .country.US:hover {
 	fill: #353e4d;
@@ -22,11 +26,11 @@
 
 .marker {
 	fill: transparent;
-	stroke: #eb85e8;
+	stroke: rgba(255, 255, 255, 0.7);
 }
 
 .marker:hover {
-	fill: #eb85e8;
+	fill: rgba(255, 255, 255, 0.7);
 }
 
 .arc {
