@@ -176,28 +176,81 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 
         }
 
-	function drawServers() {
-                var data = loadQueue.getResult('servers');
-		var servers = topojson.feature(data, data.objects.places).features;
+        function drawDesc(serversLayer, added) {
+                var rup = d3.select('#up');
+                var p = rup.selectAll('li')
+                            .data(added, function(d) { return d.id;});
 
-		var serversLayer = dMap.append('g')
-			    .attr('id', 'layer3');
-		var circles = serversLayer.selectAll('.marker')
-			.data(servers)
-		            .enter().append('circle');
+                p.select('label').attr('class', function (d) { return (d.live)?"live":"off";});
 
-		circles.attr('class', 'marker')
-		  	.attr('data-dccode', function(d) { return d.properties.description; })
-			.attr('r', 0)
+                var l = p.enter()
+                            .append("li")
+                            .on('mouseenter', function (d) {
+                                    d3.select(this)
+                                            .classed({orange: true});
+
+                                    d3.select('#marker' + d.id)
+                                            .transition().duration(400)
+                                            .style('fill', 'red')
+                                            .attr('r', 20);
+
+                                    console.log (d, this);
+                            })
+                            .on('mouseleave', function (d) {
+                                    d3.select(this)
+                                            .classed({orange: false});
+
+                                    d3.select('#marker' + d.id)
+                                            .transition().duration(400)
+                                            .style('fill', 'white')
+                                            .attr('r', 4.5);
+
+                            });
+
+                l.append("label")
+                        .attr('class', function (d) { return (d.live)?"live":"off";})
+                        .append("h2")
+                        .attr('for', function (d) { return 'label-' + d.properties.id; })
+                        .text(function (d) { return d.properties.name;})
+                        .append("span")
+                        .text(function (d) {return Util.Radio.mapu_talk(2, 4);});
+                /*
+                 l.append("p")
+                 .text(function (d) {return mapu_talk (15, 30);});
+                 */
+                p.exit().remove();
+        }
+
+        function  drawCircles(serversLayer, up) {
+                var join = serversLayer.selectAll('.marker')
+			    .data(up, function (d) { return d.id;;});
+
+                join.style({"stroke": "white", "fill": "#aaa"})
+                        .transition().delay(function (d) {return Math.random()*1000;}).duration(550)
+                        .style("stroke-width", function (d) {
+                                if (d.live)
+                                        return 7;
+                                return 1;
+                        });
+
+
+		var circles = join.enter().append('circle');
+
+		circles.attr({class: 'marker', id: function (d) {return 'marker' + d.id;}})
 			.attr('cx', function(d) { return dProjection(d.geometry.coordinates)[0]; })
 			.attr('cy', function(d) { return dProjection(d.geometry.coordinates)[1]; })
-                        .transition().duration(2000)
-                        .attr('r', 4.5);
+                        .attr('r', 0)
+                        .style({stroke: "rgba(255, 255, 255, 0.7)",
+                                fill: "rgba(255, 255, 255, 0.7)"})
+                        .transition().duration(400)
+                        .attr('r', 4.5)
+                        .style({stroke: "rgba(255, 0, 0, 0.7)"});
+                //                                        fill: "transparent"});
 
                 circles.append('svg:title')
                         .text(function(d) {return d.properties.name});
 
-			//.on('click', updateServers);
+		//.on('click', updateServers);
 
                 circles.on('mouseover', function () {
                         d3.select(this).transition().duration(400)
@@ -210,13 +263,33 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
                 });
 
 
-                circles.on('clicked', function () {
-                        d3.select(this).transition().duration(4000)
-                                .attr('r', 20);
+                circles.on('click', function () {
+                        //                                console.log (this, 'clicked');
+                        d3.select(this).transition().duration(400)
+                                        .attr('r', 20);
                 });
 
+                join.exit()
+                        .transition().duration(400)
+                        .attr('r', 100)
+                                .transition().duration(200)
+                        .attr('r', 0)
+                        .remove();
+        }
 
-		mapLayers.push(serversLayer);
+	function drawServers() {
+                var data = loadQueue.getResult('servers');
+		var servers = topojson.feature(data, data.objects.places).features;
+                servers = servers.map (function (d,k) {d.id = k;return d;;});
+
+		var serversLayer = dMap.append('g')
+			    .attr('id', 'layer3');
+
+                Util.Radio.life (servers, function (up) {
+                        drawCircles(serversLayer, up);
+                        drawDesc   (serversLayer, up);
+		        mapLayers.push(serversLayer);
+                });
 	}
 
 	function updateServers(de) {

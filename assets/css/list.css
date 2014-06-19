@@ -108,7 +108,7 @@ label.live:before{
   border: 1px solid #1abc9d;
 }
 
-li:first-child label{
+li.red label{
   border-right: 8px solid #f87c85;
 }
 
@@ -121,18 +121,18 @@ li:first-child label:after{
   height: 149px;
 }
 
-li:nth-child(2) label{
+li.orange label{
   border-right: 8px solid #feb47f;
 }
 
-li:nth-child(3) label{
+li.blue label{
   border-right: 8px solid #3498db;
 }
 
-li:nth-child(4) label{
+li.magenta label{
   border-right: 8px solid #b985ea;
 }
 
-li:last-child label{
+li.green label{
   border-right: 8px solid #43d6b0;
 }
