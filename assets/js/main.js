@@ -1,4 +1,4 @@
-require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], function(preload, $, d3, topojson, _, Util) {
+require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player'], function(preload, $, d3, topojson, _, Util, Player) {
 
 	var loadQueue = new preload.LoadQueue(true);
 	loadQueue.on('fileprogress', loadProgressUpdate);
@@ -14,7 +14,9 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 	loadQueue.loadFile({name: 'Regiones', id: 'regions', src: 'assets/data/region_codes.csv'});
 	loadQueue.loadFile({name: 'States', id: 'states', src: 'assets/data/state_latlon.csv'});
 	loadQueue.loadFile({name: 'Radios', id: 'servers', src: 'assets/data/servers.json'});
-	//loadQueue.loadFile({name: 'Tiles', id: 'tiles', src: 'tiles/geoserver.mbtiles'});
+	loadQueue.loadFile({name: 'Streams', id: 'stations', src: 'assets/data/radios.json'});
+
+        //loadQueue.loadFile({name: 'Tiles', id: 'tiles', src: 'tiles/geoserver.mbtiles'});
 
 	// D3 Elems
 
@@ -188,6 +190,10 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
                                   d3.select('.radio-cover')
                                           .attr('src', p.media.m);
                 });
+// 			<source src="http://storage-new.newjamendo.com/download/track/705190/mp32/Abi_-_Abitude.mp3" type="audio/mpeg" codecs="mp3"></source>
+                d3.select('#audio')
+                        .attr({src: "http://listen.42fm.ru:8000/stealkill-3.0.ogg" //function (d) {return d.listen_url},
+                              });
 
                 d3.select('#desc' + d.id)
                         .classed({orange: true});
@@ -324,10 +330,12 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils'], functi
 
 	function drawServers() {
                 var data = loadQueue.getResult('servers');
+                var streams = loadQueue.getResult('stations');
 		var servers = topojson.feature(data, data.objects.places).features;
                 servers = servers.map (function (d,k) {
                         d.id = k;
                         d.properties.desc = Util.Radio.mapu_talk(2, 4);
+                        d.stream = Util.pick_one(streams);
                         return d;
                 });
 

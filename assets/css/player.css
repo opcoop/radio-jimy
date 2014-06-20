@@ -39,8 +39,9 @@ p { margin: 0; }
 }
 
 #progress {
-	  width: 320px;
-	  height: 320px;
+	  width: 640px;
+	  height: 640px;
+          left: -160px;
 	  z-index: 200;
   transform: rotate(147deg);
 	  -webkit-transform: rotate(147deg);
@@ -110,6 +111,7 @@ button {
 	  outline: 0;
 	  cursor: pointer;
 	  text-align: center;
+          vertical-align: middle;
 	  text-shadow: 1px 1px 3px #000;
 	  transition: all .3s ease-in-out;
 	  -webkit-transition: all .3s ease-in-out;
