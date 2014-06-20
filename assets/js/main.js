@@ -330,12 +330,12 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
 
 	function drawServers() {
                 var data = loadQueue.getResult('servers');
-                var streams = loadQueue.getResult('stations');
+//                var streams = loadQueue.getResult('stations');
 		var servers = topojson.feature(data, data.objects.places).features;
                 servers = servers.map (function (d,k) {
                         d.id = k;
                         d.properties.desc = Util.Radio.mapu_talk(2, 4);
-                        d.stream = Util.pick_one(streams);
+//                      d.stream = Util.pick_one(streams);
                         return d;
                 });
 
