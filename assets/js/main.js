@@ -178,7 +178,7 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
 
         }
 
-        function highlightRadio (d) {
+        function selectRadio (d) {
                 $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
                           {
                                   tags: d.properties.name + ',argentina',
@@ -195,6 +195,17 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
                         .attr({src: "http://listen.42fm.ru:8000/stealkill-3.0.ogg" //function (d) {return d.listen_url},
                               });
 
+                d3.select('#player-radio')
+                        .transition().duration(400)
+                        .text(function () {return d.properties.name;});
+
+                d3.select('#player-desc')
+                        .transition().duration(400)
+                        .text(function () {return d.properties.desc;});
+
+        }
+        
+        function highlightRadio (d) {
                 d3.select('#desc' + d.id)
                         .classed({orange: true});
 
@@ -203,13 +214,6 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
                         .style('fill', 'red')
                         .attr('r', 20);
 
-                d3.select('#player-radio')
-                        .transition().duration(400)
-                        .text(function () {return d.properties.name;});
-
-                d3.select('#player-desc')
-                        .transition().duration(400)
-                        .text(function () {return d.properties.desc;});
         }
 
         function unlightRadio (d) {
@@ -235,7 +239,11 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
                             })
                             .on('mouseleave', function (d) {
                                     unlightRadio(d);
+                            })
+                            .on('click', function (d) {
+                                    selectRadio(d);
                             });
+
 
                 l.append('a').attr('href', '#');
                 l.append('i');
@@ -257,6 +265,9 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
                             })
                             .on('mouseleave', function (d) {
                                     unlightRadio(d);
+                            })
+                            .on('click', function (d) {
+                                    selectRadio(d);
                             });
 
                 l.append("label")
@@ -312,7 +323,10 @@ require(['preloadjs', 'jquery', 'd3', 'topojson', 'underscore', 'utils', 'player
                 circles.on('mouseout', function (d) {
                         unlightRadio(d);
                 });
-
+                
+                circles.on('click', function (d) {
+                        selectRadio(d);
+                });
 
                 circles.on('click', function () {
                         //                                console.log (this, 'clicked');
