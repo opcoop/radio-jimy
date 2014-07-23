@@ -107,10 +107,10 @@ define(function(require, exports, module) {
 						top
 						 |
 						 |
-				left ----|---- right
+        				left ----|---- right
 						 |
 						 |
-					   bottom
+	         			       bottom
 			*/
 			return  point[0] /*x*/ >= bounds[0][0] /*left	*/ && 
 					point[1] /*y*/ >= bounds[0][1] /*top	*/ && 

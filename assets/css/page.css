@@ -1,6 +1,7 @@
 body {
 	height: 100%;
 	background: #272e38;
+	overflow: hidden;
 }
 
 svg {

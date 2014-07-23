@@ -1,3 +1,5 @@
+/* http://codepen.io/larrygeams/pen/sutec */
+
 body{
   font-family: sans-serif;
 }
@@ -16,10 +18,11 @@ ul{
 }
 
 li.radio {
-    width: 250px;
-    padding: 5px;
-    height: 80px;
-    display: inline-block;
+  float: right;
+  width: 250px;
+  padding: 5px;
+  height: 80px;
+  display: inline-block;
 }
 
 .steps{
