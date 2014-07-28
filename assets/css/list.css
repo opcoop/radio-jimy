@@ -11,10 +11,28 @@ h1{
   font-weight: 100;
 }
 
+.hover {
+  border: 20px solid red
+}
+
+.list h1 {
+  right: 10px;
+  position: absolute;
+}
+
 ul{
+  pointer-events: all;
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%
+}
+}
+
+li {
+  width: 100%;
+  height: 100%
 }
 
 li.radio {
@@ -26,6 +44,7 @@ li.radio {
 }
 
 .steps{
+  pointer-events: none;
     width: 60%;
   position: absolute;
 //  top: 15%;

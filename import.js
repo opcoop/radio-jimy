@@ -2,14 +2,45 @@ var _		= require('underscore')
 ,   fs		= require('fs')
 ,   csvParse    = require('csv-parse')
 ,   mongoose    = require('mongoose')
-,   db		= mongoose.createConnection('mongodb://localhost/backboneio')
 ,   Schema	= require('./models/radio')
 ;
 
-var Model = db.model('Radio', Schema);
+
+
+var opt = require('node-getopt').create([
+        ['o' , 'out=ARG'	, 'write csv back to file.'],
+        [''  , 'db[=ARG]'	, 'write data to db.'],
+        ['h' , 'help'		, 'display this help'],
+        ['v' , 'version'	, 'show version']
+])              // create Getopt instance
+.bindHelp()     // bind option 'help' to default action
+.parseSystem(); // parse command line
+
+if (! opt.argv[0])
+        return console.error ('need an argument');
 
 var f = 0;
 var n = 0;
+
+var csvOut = [];
+
+function csvWrite (data, file) {
+
+        fs.writeFileSync(file, _.map(data, function (d) {
+                return (d.join(','));
+        }).join('\n'));
+
+
+}
+
+function dataOut (data, geodata) {
+        if (geodata) {
+                csvOut.push(_.union (data, [geodata.coordinates[0], geodata.coordinates[1]]));
+                formatData (data, geodata);
+        } else {
+                csvOut.push(data);
+        }
+}
 
 function formatData (data, geodata) {
         var onair = (data[4] === 'AL AIRE')?true:false;
@@ -29,7 +60,7 @@ function formatData (data, geodata) {
         };
 }
 
-console.log (process.argv[2]);
+console.log (opt);
 var raw = require('./assets/data/cities-ar.json').features;
 var cities = _.pluck(raw, 'properties');
 var coords = _.pluck(raw, 'geometry');
@@ -40,7 +71,7 @@ for (var i in cities) {
 
 var notfound = [];
 
-var csv = csvParse(fs.readFileSync(process.argv[2]), {}, function (err, output) {
+var csv = csvParse(fs.readFileSync(opt.argv[0]), {}, function (err, output) {
         console.log (cities);
         var godo = _.map (output, function (data) {
                 var mod = ['', 'VILLA ', 'GENERAL ', 'MINISTRO ', 'EL ', 'LOS ', 'ESTACION '];
@@ -54,7 +85,7 @@ var csv = csvParse(fs.readFileSync(process.argv[2]), {}, function (err, output) 
                                 });
                                 if (pos) {
                                         f++;
-                                        return formatData(data, pos);
+                                        return dataOut(data, pos);
                                 }
                         }
                 }
@@ -68,7 +99,7 @@ var csv = csvParse(fs.readFileSync(process.argv[2]), {}, function (err, output) 
                                 });
                                 if (pos) {
                                         f++;
-                                        return formatData(data, pos);
+                                        return dataOut(data, pos);
                                 }
                         }
                 }
@@ -76,21 +107,35 @@ var csv = csvParse(fs.readFileSync(process.argv[2]), {}, function (err, output) 
 
                 n++;
                 notfound.push (data);
-                return null;
+                return dataOut(data);
         });
 
-        _.each(godo, function (g) {
-                if (g === null) {
-                        return;
-                }
+        if (opt.options.hasOwnProperty('db')) {
+                var dbUrl = 'mongodb://' + (opt.options.db || 'localhost/backboneio');
+
+                console.log ('writting', f, 'to', dbUrl);
+
+                var db	= mongoose.createConnection(dbUrl);
+                var Model = db.model('Radio', Schema);
+
+                _.each(godo, function (g) {
+                        if (g === null) {
+                                return;
+                        }
                 _.extend(g, {creator: 'importado@me.gob.ar'});
-                Model.create(g, function(err, model) {
-	                if(err) {
-		                console.error(err);
-		        }
-	        });
+                        Model.create(g, function(err, model) {
+	                        if(err) {
+		                        console.error(err);
+		                }
+	                });
 
-        });
+                });
+        }
+
+        if (opt.options.hasOwnProperty('out')) {
+                console.log ('writting', csvOut.length, 'to', opt.options.out);
+                csvWrite(csvOut, opt.options.out);
+        }
 
         console.log ('found', f, 'not found', n);
 });

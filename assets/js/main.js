@@ -2,11 +2,14 @@ require(['loading', 'app', 'vent',
          'jquery', 'underscore', 'backbone', 'utils',
          'models/radio',
          'views/map', 'views/radiolist', 'views/player'],
-        function(LoadView, App, Vent,
+        function(loadQueue, App, Vent,
                  $, _, Backbone, Util,
                  Radio,
                  MapView, ListView, PlayerView) {
-            App.start();
+
+            loadQueue.on('complete', function () {
+                App.start();
+            });
 
             Vent.on('radio:selected', function (model) {
 
@@ -21,7 +24,7 @@ require(['loading', 'app', 'vent',
             function selectRadio (d) {
                 $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
                           {
-                              tags: d.properties.name + ',argentina',
+                                  tags: this.model.get('name') + ',argentina',
                                   tagmode: "all",
                                   format: "json"
                           }, function (data) {

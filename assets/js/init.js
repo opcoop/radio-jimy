@@ -9,6 +9,7 @@ requirejs.config({
         d3: '../vendor/d3/d3.min',
         topojson: '../vendor/topojson/topojson',
         leaflet: '../vendor/leaflet/dist/leaflet',
+        leafletmarkers: '../vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.min',
         backbone: '../vendor/backbone/backbone-min',
         marionette: '../vendor/backbone.marionette/lib/backbone.marionette.min',
         wreqr: '../vendor/backbone.wreqr/lib/backbone.wreqr.min',
@@ -48,6 +49,9 @@ requirejs.config({
         marionette : {
             deps : ['jquery', 'underscore', 'backboneio'],
             exports : 'Marionette'
+        },
+        leafletmarkers: {
+            deps : ['leaflet']
         }
         /*gapi: { exports: 'gapi' }*/
     }
@@ -68,6 +72,7 @@ define([
     };
 
     loadCss('/assets/vendor/leaflet/dist/leaflet.css');
+    loadCss('/assets/vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css');
     loadCss('/assets/vendor/font-awesome/css/font-awesome.min.css');
 
     var socket = io.connect('http://localhost');

@@ -6,9 +6,7 @@
   <span id="loading-text">Loading...</span>
 </div>
 <div id="map"></div>
-<div class="steps">
-  <ul id="radio-list" class="list"></ul>
-</div>
+<div id="radio-list" class="steps"></div>
 <div id="player-container">
   <label class="to-back-label" for="to-back"><i class="fa fa-bars fa-lg"></i></label>
   <input type="checkbox" id="to-back"><!-- playlist toggle -->
@@ -24,12 +22,10 @@
 
 <!-- http://codepen.io/larrygeams/pen/sutec -->
 <script type="text/template" id="list-item-tpl">
-    <li class="radio">
-      <input  id='label-<%= _id %>' type='checkbox'/>
-      <label for='label-<%= _id %>' class="desc-label">
+      <input  id='label-<%= _id %>' type='checkbox' />
+      <label for='label-<%= _id %>' class="desc-label <% if (onair) print('live') %>">
         <h2><%= name %> <span><%= desc %></span></h2>   
       </label>
-    </li>
 </script>
 
 <script type="text/template" id="player-front-tpl">
@@ -50,7 +46,7 @@
 	    <p id="player-desc"><a href="#" target="_blank"></a></p>
 	  </div><!-- #info -->
 	  <div class="desc">
-            <%= desc %>
+            <h1> <%= desc %></h1>
 	  </div>
 	  <p class="scroll">scroll down</p>
 	</div><!-- #cover -->

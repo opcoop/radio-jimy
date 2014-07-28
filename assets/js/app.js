@@ -20,7 +20,7 @@ define (['jquery', 'underscore', 'backbone', 'utils',
                     collection: col,
                     model: new Backbone.Model({
                         name: 'selecciona una radio',
-                        cover: '/assets/img/radio.jpg',
+                        cover: '',
                         src:   'null',
                         desc:  'none'
 

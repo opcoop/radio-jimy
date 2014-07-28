@@ -11,18 +11,9 @@ var express	= require('express'),
 var iob = new iobackends();
 
 var db = mongoose.createConnection('mongodb://localhost/backboneio');
-var Schema = new mongoose.Schema({
-        name: { type: String, required: true, unique: true},
-        desc: { type: String, required: true},
-        creator: {type: String, required: true},
-        position: {
-                lng: {type: Number, required: true, min: -100, max: 100},
-                lat: {type: Number, required: true, min: -100, max: 100}
-        },
-        stream: String,
-        img: String
-});
-var Model = db.model('Radio', Schema);
+var Schema = require('./models/radio');
+var Model = db.model ('Radio', Schema);
+
 Model.filter = function  (model) { /* hack */
         delete model.creator;
         model.creator = undefined;
