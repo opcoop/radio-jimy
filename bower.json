@@ -1,0 +1,39 @@
+{
+  "name": "radiojimy",
+  "version": "0.0.0",
+  "homepage": "https://github.com/malbec/radio-jimy",
+  "authors": [
+    "Niv Sardi <xaiki@evilgiggle.com>"
+  ],
+  "description": "vizualize all your radios",
+  "main": "assets/js/main.js",
+  "keywords": [
+    "radios",
+    "icecast"
+  ],
+  "license": "AGPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Leaflet.awesome-markers": "~2.0.2",
+    "backbone.babysitter": "~0.0.6",
+    "PreloadJS": "*",
+    "backbone": "~1.0.0",
+    "backbone.marionette": "~1.0.2",
+    "crel": "*",
+    "font-awesome": "~4.1.0",
+    "d3": "~3.4.10",
+    "hbs": "~0.8.1",
+    "jquery": "1.9.x",
+    "leaflet": "~0.7.3",
+    "linqjs": "*",
+    "sugar": "~1.4.1",
+    "requirejs": "~2.1.14",
+    "topojson": "~1.3.0"
+  }
+}
