@@ -29,18 +29,17 @@ function csvWrite (data, file) {
         fs.writeFileSync(file, _.map(data, function (d) {
                 return (d.join(','));
         }).join('\n'));
-
-
 }
 
 function dataOut (data, geodata) {
         if (geodata) {
                 csvOut.push(_.union (data, [geodata.coordinates[0], geodata.coordinates[1]]));
-                formatData (data, geodata);
-        } else {
-                csvOut.push(data);
+                return formatData (data, geodata);
         }
-}
+
+        csvOut.push(data);
+        return null;
+};
 
 function formatData (data, geodata) {
         var onair = (data[4] === 'AL AIRE')?true:false;
@@ -119,7 +118,7 @@ var csv = csvParse(fs.readFileSync(opt.argv[0]), {}, function (err, output) {
                 var Model = db.model('Radio', Schema);
 
                 _.each(godo, function (g) {
-                        if (g === null) {
+                        if (g === null || !g) {
                                 return;
                         }
                 _.extend(g, {creator: 'importado@me.gob.ar'});
