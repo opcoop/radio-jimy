@@ -41,7 +41,6 @@ define (['underscore', 'marionette', 'leaflet', 'leafletmarkers', 'vent', 'loadi
                         });
 
                         Vent.on('hover:' + self.model.id, function () {
-                                console.log ('hovered', self);
                                 // do something with marker
                         });
 
@@ -54,19 +53,6 @@ define (['underscore', 'marionette', 'leaflet', 'leafletmarkers', 'vent', 'loadi
                 template: function (data) {
                         // hack: we don't need any templating, it's all
                         // handled by leaflets
-                },
-                modelEvents: {
-                        "change": "modelChanged"
-                },
-                collectionEvents: {
-                        "add": "modelAdded"
-                },
-
-                modelAdded: function (arg) {
-                        console.log ('modelAdded', arg);
-                },
-                modelChanged: function (arg) {
-                        //this.marker.setLatLng(this.model.get('position'));
                 },
                 onDestroy: function () {
                         this.marker.remove();
@@ -126,7 +112,6 @@ define (['underscore', 'marionette', 'leaflet', 'leafletmarkers', 'vent', 'loadi
                         }
 
                         function onEachFeature(feature, layer) {
-                                console.log ('feature', feature, layer);
                                 layer.on({
                                         click: clickFeature
                                 });

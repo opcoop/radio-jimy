@@ -29,14 +29,16 @@ define (['vent', 'underscore', 'jquery', 'backbone', 'marionette'],
                 },
                 onRender: function () {
                         var cover = this.model.get('cover');
-                        if (!cover || _.where(["", "null", "undefined"], cover)) {
+                        if (_.where(["", "null", "undefined"], cover).length)
+                                cover = null;
+                        if (!cover) {
                                 $.getJSON(FLICKR_URL, {
                                         tags: this.model.get('city') + ',argentina',
                                         tagmode: "all",
                                         format: "json"
                                 }, function (data) {
                                         var p = pick_one(data.items);
-                                        $('.radio-cover').attr('src', p.media.m); 
+                                        $('.radio-cover').attr('src', p.media.m);
                                 });
                         }
 

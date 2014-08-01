@@ -3,9 +3,10 @@ var express	= require('express'),
     _		= require('underscore'),
     /* utilities */
     backboneio	= require('backbone.io'),
-    iobackends	= require ('./iobackends'),
     mongoose	= require('mongoose'),
-    uuid        = require('uuid-v4')
+    uuid        = require('uuid-v4'),
+    /* local helpers */
+    iobackends	= require ('./iobackends')
 ;
 
 var iob = new iobackends();
@@ -37,8 +38,7 @@ var app         = express.Router(),
 ;
 
 function emit (req, res, type, model) {
-        var backend = req.url.split('/')[1] + 'backend';
-        ios[backend].emit(type, model);
+        ios['radiobackend'].emit(type, model);
         var resp = {};
         resp[type] = model;
         return res.send(200, resp);
@@ -47,8 +47,18 @@ function emit (req, res, type, model) {
 function errOut (res, err) {
         console.log(err);
 	return res.send(400, err);
-
 }
+
+function updateById(req, res, next) {
+        Model.findById (req.params.id, function (err, doc) {
+                if (err) {
+                        return errOut (res, err);
+                }
+                _.extend (doc, req.body);
+                doc.save();
+                return emit (req, res, 'updated', doc);
+        });
+};
 
 function update(req, res, next) {
         Model.findOne({ name: req.body.name }, function (err, doc) {
@@ -65,14 +75,6 @@ function update(req, res, next) {
                 doc.save();
                 return emit (req, res, 'updated', doc);
         });
-        /*
-        Model.update({creator: req.key}, req.body, function(err) {
-                if (err) {
-
- 		}
-                return emit (req, res, 'updated');
-        });
-         */
 }
 
 function createUpdate(req, res, next) {
@@ -99,12 +101,29 @@ function create(req, res, next) {
 	});
 }
 
+function read(req, res, next) {
+        Model.find({}, function (err, model) {
+                if(err) {
+		        return errOut (res, err);
+		}
+                return res.send(200, model);
+        });
+};
 
+function readById(req, res, next) {
+        Model.findById(req.params.id, function (err, model) {
+                if(err) {
+		        return errOut (res, err);
+		}
+                return res.send(200, model);
+        });
+};
 
 router.use(bodyparser.json());
 router.route('/radio')
         .post(createUpdate)
         .put(createUpdate)
+        .get(read)
 ;
 
 router.route('/radio/create')
@@ -112,9 +131,11 @@ router.route('/radio/create')
         .put(create)
 ;
 
-router.get('/radio/:id', function (req, res, next) {
-        next(new Error('not implemented'));
-});
+router.route('/radio/:id')
+        .put(updateById)
+        .post(updateById)
+        .get(readById)
+;
 
 router.get('/', function (req, res, next) {
         res.send ('welcome to the API\n');

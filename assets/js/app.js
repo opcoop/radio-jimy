@@ -1,7 +1,7 @@
 define (['jquery', 'underscore', 'backbone', 'utils',
-         'models/radio',
+         'models/radio', 'models/live',
          'views/map', 'views/radiolist', 'views/player'],
-        function($, _, Backbone, Util, Radio, MapView, ListView, PlayerView) {
+        function($, _, Backbone, Util, Radio, Live, MapView, ListView, PlayerView) {
             var App = new Backbone.Marionette.Application();
 
             App.addRegions({
@@ -11,19 +11,22 @@ define (['jquery', 'underscore', 'backbone', 'utils',
             });
 
             App.addInitializer(function(options){
-                var col = new Radio.Collection();
-                col.fetch();
+                var rcol = new Radio.Collection();
+                rcol.fetch();
+
+                var lcol = new Live.Collection();
+                lcol.fetch();
 
                 var mapView    = new MapView ({collection: col});
                 var listView   = new ListView({collection: col});
                 var playerView = new PlayerView({
-                    collection: col,
+                    collection: rcol,
                     model: new Backbone.Model({
-                        name: 'selecciona una radio',
-                        cover: '',
-                        src:   'null',
-                        desc:  'none'
-
+                            name: 'selecciona una radio',
+                            cover: '',
+                            src:   'null',
+                            desc:  'none',
+                            onair: false
                     })
                 });
 
