@@ -36,5 +36,9 @@
   "license": "agplv3",
   "engines": {
     "node": ">=0.8"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install",
+    "postupdate": "node_modules/.bin/bower update"
   }
 }
