@@ -11,16 +11,13 @@ define (['jquery', 'underscore', 'backbone', 'utils',
             });
 
             App.addInitializer(function(options){
-                var rcol = new Radio.Collection();
-                rcol.fetch();
-
-                var lcol = new Live.Collection();
-                lcol.fetch();
+                var col = new Radio.Collection();
+                col.fetch();
 
                 var mapView    = new MapView ({collection: col});
                 var listView   = new ListView({collection: col});
                 var playerView = new PlayerView({
-                    collection: rcol,
+                    collection: col,
                     model: new Backbone.Model({
                             name: 'selecciona una radio',
                             cover: '',
