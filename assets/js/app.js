@@ -1,7 +1,7 @@
 define (['jquery', 'underscore', 'backbone', 'utils',
-         'models/radio', 'models/live',
+         'models/radio',
          'views/map', 'views/radiolist', 'views/player'],
-        function($, _, Backbone, Util, Radio, Live, MapView, ListView, PlayerView) {
+        function($, _, Backbone, Util, Radio, MapView, ListView, PlayerView) {
             var App = new Backbone.Marionette.Application();
 
             App.addRegions({
