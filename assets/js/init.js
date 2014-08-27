@@ -76,7 +76,7 @@ define([
     loadCss('/assets/vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css');
     loadCss('/assets/vendor/font-awesome/css/font-awesome.min.css');
 
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://' + window.location.hostname);
     Backbone.io.connect();
 
     socket.on('news', function (data) {
