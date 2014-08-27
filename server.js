@@ -7,8 +7,7 @@ var _              = require('underscore'),
     url            = require('url'),
     backboneio     = require('backbone.io'),
     /* routes */
-    api            = require('./api'),
-    auth           = require('./auth')
+    api            = require('./api')
 ;
 
 var conf = {
@@ -36,8 +35,6 @@ app.use(require('less-middleware')(
 app.use('/assets', express.static(__dirname + conf.Dirs.pub));
 app.use('/models', express.static(__dirname + conf.Dirs.models));
 app.use('/lib',    express.static(__dirname + conf.Dirs.vendor));
-
-auth(app);
 
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
