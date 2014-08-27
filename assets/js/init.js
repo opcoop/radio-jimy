@@ -1,4 +1,5 @@
 requirejs.config({
+    waitSeconds: 30,
     baseUrl: 'assets/js',
     paths: {
         jquery: '../vendor/jquery/jquery.min',
