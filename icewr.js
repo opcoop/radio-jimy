@@ -1,9 +1,13 @@
 var Icecast = require('icecast-helper')
-,   request = require('request')
-,   url     = require('url')
+,   mongoose= require('mongoose')
+,   fs      = require('fs')
 ,   _	    = require('underscore')
 ;
-var text ="";
+
+var db = mongoose.createConnection('mongodb://localhost/backboneio');
+var Schema = require('./models/radio');
+var Model = db.model ('Radio', Schema);
+
 
 var opt  = require('node-getopt').create([
         ['k' , 'key'		, 'API key'],
@@ -13,35 +17,32 @@ var opt  = require('node-getopt').create([
 .bindHelp()     // bind option 'help' to default action
 .parseSystem(); // parse command line
 
-var key = opt.options.key || 'd1rtys3cr1t';
-var URL = opt.argv[0] || 'http://localhost:3100/api/' + key + '/radio';
+Model.find({}, function (err, data) {
+        if(err) {
+		return console.error(err);
+	}
 
-request(URL, function (error, response, body) {
-        if (error || response.statusCode != 200) {
-                return error;
-        }
-	        
-	var collection = JSON.parse (body);
+        var text = "";
+	var collection = data;
         _.each(collection, function (item) { /* populate the memorystore */
                 if (! item.stream)
                         return;
 
-              		
-		text += "<mount>\n"
-		text += "<mount-name>" + item._id + "</mount-name>\n"
-		text += "<username>source</username>\n"
-		text += "<password>" + item.password + "<password>\n" 
-		text += "<stream-name>" + item.name + "</stream-name>\n"
-		text += "<stream-description>FM" + item.freq + ", " + item.city + ", " + item.prov + "</stream-description>\n"
-    		text += "<stream-url>http://some.place.com</stream-url>\n"
-		text += "</mount>\n"
-		          
-		
+                console.log ('processing', item);
+		text += "<mount>\n";
+		text += "<mount-name>" + item._id + "</mount-name>\n";
+		text += "<username>source</username>\n";
+		text += "<password>" + item.password + "<password>\n";
+		text += "<stream-name>" + item.name + "</stream-name>\n";
+		text += "<stream-description>FM" + item.freq + ", " + item.city + ", " + item.prov + "</stream-description>\n";
+    		text += "<stream-url>http://some.place.com</stream-url>\n";
+		text += "</mount>\n";
+
 		return;
         });
-var fs   = require('fs');		
-fs.writeFileSync ('icecast.txt',text);		
 
+        fs.writeFileSync ('icecast.txt',text);
+        process.exit();
 });
 
 
