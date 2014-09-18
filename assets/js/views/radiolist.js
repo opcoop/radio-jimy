@@ -46,7 +46,7 @@ define (['vent', 'underscore', 'marionette'], function (Vent, _, Marionette) {
         });
 
         var listView = Marionette.CollectionView.extend ({
-                tagName: 'ul class="list"',
+                tagName: 'ul class="list provs"',
                 itemView: itemView,
                 onShow: function () {
 
@@ -56,7 +56,7 @@ define (['vent', 'underscore', 'marionette'], function (Vent, _, Marionette) {
                         var el = '#' + prov;
                         var $el = collectionView.$(el);
                         if (! $el.length) {
-                                collectionView.$el.append('<li id="' + prov + '-li"class="prov-li"><ul id="' + prov + '" class="list">');
+                                collectionView.$el.append('<li id="' + prov + '-li"class="prov-li"><ul id="' + prov + '" class="list radios">');
                                 $el = collectionView.$(el);
                                 $el.append('<h1>' + prov + '</h1>');
                         }
