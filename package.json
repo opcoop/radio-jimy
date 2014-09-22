@@ -31,7 +31,8 @@
     "socket.io": "0.9.x",
     "underscore": "1.4.x",
     "uuid-v4": "^0.1.0",
-    "watchr": "2.4.x"
+    "watchr": "2.4.x",
+    "body-parser": "~1.8.3"
   },
   "license": "agplv3",
   "engines": {
