@@ -26,7 +26,11 @@ ul {
 
 li {
 	width: 100%;
-	height: 100%
+	height: 100%;
+	-webkit-transition: all 2s;
+	-moz-transition: all 2s;
+	-o-transition: all 2s;
+	transition: all 2s;
 }
 
 /*
@@ -38,6 +42,15 @@ li.radio {
 	display: inline-block;
 }
 */
+
+li.radio {
+	max-height: 0px !important;
+	overflow: hidden;
+}
+
+li.prov-li:hover li.radio {
+	max-height: 50px!important;
+}
 
 .steps {
 	pointer-events: none;
