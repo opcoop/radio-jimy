@@ -12,7 +12,7 @@ a { color: #FFF; text-decoration: none; }
 a:hover { color: #26C5CB; }
 p { margin: 0; }
 
-h1 {
+#player-container h1 {
     margin: -20px;
     color: #fff;
     text-align: center;
