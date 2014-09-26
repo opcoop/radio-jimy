@@ -92,7 +92,7 @@ define (['underscore', 'marionette', 'leaflet', 'leafletmarkers', 'vent', 'loadi
                         function clickFeature(e) {
                                 var layer = e.target;
                                 if (self.selected === layer._path) {
-                                        $('li.prov-li').show();
+                                        $('li.prov-li').show().removeClass('alone');
                                         layer._path.setAttribute('class', 'leaflet-clickable');
                                         self.selected = undefined;
                                         map.setView(self.config.center, self.config.zoom);
@@ -105,6 +105,7 @@ define (['underscore', 'marionette', 'leaflet', 'leafletmarkers', 'vent', 'loadi
 
                                         $('li.prov-li').hide();
                                         $('li.prov-li#' + layer.feature.id.replace(/ /g, '-') + '-li').show();
+                                        $('li.prov-li#' + layer.feature.id.replace(/ /g, '-') + '-li').addClass('alone');
                                         layer._path.setAttribute('class', 'selected');
                                         self.selected = layer._path;
                                         //console.log(layer.feature.id); //country info from geojson

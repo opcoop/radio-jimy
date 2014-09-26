@@ -44,12 +44,12 @@ li.radio {
 */
 
 li.radio {
-	max-height: 0px !important;
+	max-height: 0px;
 	overflow: hidden;
 }
 
-li.prov-li:hover li.radio {
-	max-height: 50px!important;
+li.prov-li:hover li.radio, li.prov-li.alone li.radio {
+	max-height: 50px;
 }
 
 .steps {
