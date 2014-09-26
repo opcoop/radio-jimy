@@ -2,19 +2,18 @@
 body {
 	font-family: Arial, Helevetica, sans-serif;
 	font-size: 12px;
+
 }
 
 .hover {
 	border: 20px solid red;
 }
-
 /*
 .list h1 {
 	right: 10px;
 	position: absolute;
 }
 */
-
 ul {
 	pointer-events: all;
 	list-style: none;
@@ -23,7 +22,6 @@ ul {
 	width: 100%;
 	height: 100%
 }
-
 li {
 	width: 100%;
 	height: 100%;
@@ -32,7 +30,6 @@ li {
 	-o-transition: all 2s;
 	transition: all 2s;
 }
-
 /*
 li.radio {
 	float: right;
@@ -62,14 +59,15 @@ li.prov-li:hover li.radio, li.prov-li.alone li.radio {
 	// top: 15%;
 	// left: 0px;
 */
-
 }
+
 
 .ui-sortable-placeholder {
 	border: 1px dotted #fff;
 	padding: 30px 20px;
 	position: relative;
 }
+
 .ui-sortable-placeholder:after {
 	content: "Place me here. Pretty Please :3";
 	position: absolute;
@@ -94,21 +92,23 @@ label.desc-label {
 	cursor: pointer;
 	transition: all 0.7s ease;
 	position: relative;
-	padding: 2px 5px 2px 60px;
+	padding: 4px 5px 4px 60px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
 
 label.desc-label h2 span{
-	display: block;
+	display: inline;
 	font-size: 12px;
 	text-transform: capitalize;
 	font-weight: normal;
 	color: #CACACA;
+	padding-left: 5px;
 }
 
-label.desc-label :before{
+
+label.desc-label :before {
 	content:"";
 	width: 19px;
 	height: 19px;
@@ -135,6 +135,10 @@ label.desc-label :after{
 label.live :before{
 	background: url("http://designmodo.github.io/Flat-UI/images/todo/done.png") no-repeat center center;
 	border: 1px solid #1abc9d;
+}
+
+li.red label{
+	border-right: 8px solid #f87c85;
 }
 
 li.red label{
@@ -168,32 +172,67 @@ li.green label{
 
 #radio-list.steps {
 	margin: 10px;
+	text-align: left;
+	width: 350px;
 }
+
+
 /********
  * LISTADO DE PROVINCIAS *
 *******/
+
 #radio-list ul.list.provs h1 {
 	color: #E5E5E5;
 	font-size: 1.2em;
 	font-weight: 100;
+	text-shadow: 1px 1px 2px #292929;
+	text-align: right;
+	padding-right: 1px;
+	margin-right: 10px;
+}
+
+#radio-list ul.list.provs h1:hover {
 	text-shadow: 1px 1px 3px #000;
+
+}
+
+#radio-list ul.provs {
+	background: #2C3E50;
+	padding: 3px 0px;
+}
+
+#radio-list ul.provs li {
+	border-bottom: 1px solid #2C3E50;
+	cursor: pointer;
+}
+
+#radio-list ul.provs li:hover {
+	border-bottom: 1px solid #36526D;
+	color: red;
+}
+#radio-list li.radio:hover{
+	color: red;
 }
 
 /********
  * LISTADO DE RADIOS *
 *******/
+
 #radio-list h2 {
-	color: #fff;
-	font-size: 1.1em;
-	font-weight: normal;
+	color: #f2f2f2;
+	font-size: 1em;
+	font-weight: bold;
 	margin: 4px;
 }
 
-
-
  ul.radios li.radio {
-	width: 250px;
-	margin: 3px;
+	width: 100%;
+	margin: 0;
 	height: auto;
 	display: block;
+
+}
+
+ ul.list.radios li.radio {
+
 }
